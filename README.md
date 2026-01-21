@@ -4,17 +4,23 @@ A Claude Code skill that guides you through the complete specification-driven de
 
 ## What is Specification-Driven Development?
 
-SDD is a disciplined approach to software development where **specifications are the single source of truth**. Everything flows from specs:
+SDD is a disciplined approach to software development where **specifications are the single source of truth**, guided by **established principles**. Everything flows from principles through specs:
 
 ```
-Requirements → Specifications → Tests → Implementation
+Principles → Requirements → Specifications → Tests → Implementation
 ```
 
 **The core discipline:**
 1. NO code without tests
 2. NO tests without specifications
 3. NO specifications without understanding requirements
-4. EVERY change starts with updating the spec
+4. NO requirements without established principles
+5. EVERY change starts with updating the spec (and checking against principles)
+
+**The three principle domains:**
+- **Architecture Principles** — Structural patterns, module boundaries, data flow
+- **Development Principles** — Code style, testing approach, patterns to follow
+- **Security Principles** — Secrets handling, input validation, audit requirements
 
 This skill acts as your SDD coach, guiding you through each phase and enforcing the methodology.
 
@@ -67,37 +73,45 @@ Simply invoke the skill with your feature description:
 ```
 
 The skill will guide you through:
-1. **Requirements Discovery** — Understanding what you want to build
-2. **Specification Writing** — Creating precise, testable specs
+0. **Principles Establishment** — Setting up or reviewing project principles
+1. **Requirements Discovery** — Understanding what you want to build (validated against principles)
+2. **Specification Writing** — Creating precise, testable specs (principle-compliant)
 3. **Test Derivation** — Generating tests from specs
-4. **Implementation** — Writing code to pass tests
-5. **Validation** — Verifying everything aligns
+4. **Implementation** — Writing code to pass tests (following principles)
+5. **Validation** — Verifying everything aligns (including principle compliance)
 
 ### Available Commands
 
 | Command | Description |
 |---------|-------------|
 | `/sdd` | Start full workflow or assess current state |
-| `/sdd init` | Initialize SDD files (SPEC.md, TRACEABILITY.md) |
-| `/sdd spec` | Add or edit specifications |
+| `/sdd init` | Initialize SDD files (SPEC.md, TRACEABILITY.md, principle documents) |
+| `/sdd principles` | Review or update project principles |
+| `/sdd spec` | Add or edit specifications (with principle compliance) |
 | `/sdd derive` | Generate tests from specifications |
-| `/sdd validate` | Check spec-test-implementation alignment |
-| `/sdd status` | Show coverage and health report |
-| `/sdd iterate` | Handle requirement changes properly |
+| `/sdd validate` | Check alignment including principle compliance |
+| `/sdd status` | Show coverage, health, and principle compliance report |
+| `/sdd iterate` | Handle requirement or principle changes properly |
 
 ### Typical Workflow
+
+**0. Establish principles (first time or when needed):**
+```
+/sdd principles
+```
+Sets up or reviews architecture, development, and security principles.
 
 **1. Initialize your project:**
 ```
 /sdd init
 ```
-Creates `SPEC.md` and `TRACEABILITY.md` in your project.
+Creates `SPEC.md`, `TRACEABILITY.md`, and principle documents in your project.
 
 **2. Add specifications:**
 ```
 /sdd spec
 ```
-The skill will ask questions to help you write precise, testable specs.
+The skill will ask questions to help you write precise, testable specs that comply with your principles.
 
 **3. Derive tests:**
 ```
@@ -106,21 +120,33 @@ The skill will ask questions to help you write precise, testable specs.
 Generates test cases from your specifications with traceability markers.
 
 **4. Implement:**
-Write code to make the tests pass. The skill guides you through red-green-refactor.
+Write code to make the tests pass. The skill guides you through red-green-refactor while ensuring principle compliance.
 
 **5. Validate:**
 ```
 /sdd validate
 ```
-Verifies specs, tests, and implementation are aligned.
+Verifies specs, tests, and implementation are aligned—including principle compliance.
 
 **6. Iterate:**
 ```
 /sdd iterate
 ```
-When requirements change, this ensures changes flow properly through the system.
+When requirements or principles change, this ensures changes flow properly through the system.
 
 ## Files Created
+
+### Principle Documents
+
+Located in `specs/` directory:
+
+**principles-architecture.md** — Defines structural patterns, module boundaries, and data flow rules.
+
+**principles-development.md** — Defines code style, testing requirements, and patterns to follow.
+
+**principles-security.md** — Defines secrets handling, input validation, and audit requirements.
+
+These documents are established at project start and referenced throughout the workflow.
 
 ### SPEC.md
 
@@ -151,6 +177,11 @@ Users can log in with email and password.
 **Edge Cases:**
 - Invalid email: Returns 401 "Invalid credentials"
 - Invalid password: Returns 401 "Invalid credentials"
+
+**Principles Compliance:**
+- Architecture: Auth module handles all authentication (single responsibility)
+- Development: Uses typed error responses, follows async/await patterns
+- Security: Passwords never logged, generic error messages prevent enumeration
 ```
 
 ### TRACEABILITY.md
@@ -185,23 +216,32 @@ test('login with valid credentials returns JWT token', () => {
 
 ## The SDD Philosophy
 
+### Why Principles First?
+
+- **Establishes guardrails** — Decisions are made once, enforced everywhere
+- **Resolves ambiguity** — When uncertain, principles provide the answer
+- **Ensures consistency** — All code follows the same patterns
+- **Prevents debates** — Architectural arguments are settled upfront
+
 ### Why Specifications First?
 
 - **Forces clarity** — You must understand what you're building before coding
 - **Prevents scope creep** — If it's not in the spec, don't build it
 - **Enables traceability** — Every test links to a requirement
 - **Controls change** — Changes flow through specs first
+- **Ensures principle compliance** — Each spec explicitly addresses relevant principles
 
 ### How It Differs from TDD
 
 | Aspect | TDD | SDD |
 |--------|-----|-----|
-| Starting point | Write a failing test | Write a specification |
-| Test purpose | Drive design | Verify specification |
-| Change trigger | Refactor freely | Update spec first |
+| Starting point | Write a failing test | Establish principles, then write specs |
+| Test purpose | Drive design | Verify specification compliance |
+| Change trigger | Refactor freely | Update spec first, check principles |
 | Traceability | Optional | Required |
+| Design constraints | Emerge from tests | Defined by principles |
 
-SDD is TDD with an additional layer: specifications that define WHAT before tests define HOW TO VERIFY.
+SDD is TDD with two additional layers: principles that define HOW decisions are made, and specifications that define WHAT before tests define HOW TO VERIFY.
 
 ### The Skill as Coach
 
@@ -214,6 +254,21 @@ This skill doesn't just manage files—it actively coaches you:
 
 ## Best Practices
 
+### Establishing Good Principles
+
+Principles should be established before writing specifications. Good principles are:
+
+- **Actionable** — Clear enough to guide decisions
+- **Specific** — Not so vague they apply to everything
+- **Justified** — Explain why, not just what
+- **Reviewable** — Can be updated when they no longer serve the project
+
+**Review principles when:**
+- You consistently work around a principle
+- New team members question a principle
+- Technology or requirements have shifted significantly
+- You've completed a major milestone
+
 ### Writing Good Specifications
 
 ✅ **Do:**
@@ -221,12 +276,14 @@ This skill doesn't just manage files—it actively coaches you:
 - Include preconditions, triggers, and expected outcomes
 - Cover both happy path and edge cases
 - Make each criterion independently testable
+- Explicitly address relevant principles in each spec
 
 ❌ **Don't:**
 - Specify algorithms or data structures
 - Leave acceptance criteria vague
 - Skip edge cases "for now"
 - Couple specifications together
+- Ignore principle compliance (address it even if to note "no specific principles apply")
 
 ### Maintaining Traceability
 

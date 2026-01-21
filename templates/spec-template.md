@@ -2,7 +2,7 @@
 
 > This file is the single source of truth for this project.
 > All tests and implementation derive from these specifications.
-> Changes flow: Spec → Tests → Implementation
+> Changes flow: Principles → Spec → Tests → Implementation
 
 ## Metadata
 
@@ -10,7 +10,17 @@
 - **Created:** [DATE]
 - **Test Framework:** [FRAMEWORK]
 - **Last Updated:** [DATE]
-- **SDD Version:** 1.0
+- **SDD Version:** 1.1
+
+## Governing Principles
+
+This specification is governed by the following principle documents:
+
+- [Architecture Principles](./principles-architecture.md) — Module boundaries, data flow, structural patterns
+- [Development Principles](./principles-development.md) — Code style, testing approach, required patterns
+- [Security Principles](./principles-security.md) — Secrets handling, validation, audit requirements
+
+All specifications must comply with these principles. Non-compliance requires explicit justification or principle update.
 
 ---
 
@@ -47,6 +57,11 @@ Describe the behavior from the user's perspective.]
 - [Security considerations]
 - [Technical limitations]
 
+**Principles Compliance:**
+- Architecture: [Which architecture principles apply and how this spec honors them]
+- Development: [Which development principles apply and how this spec honors them]
+- Security: [Which security principles apply and how this spec honors them]
+
 ---
 
 <!--
@@ -74,6 +89,11 @@ Describe the behavior from the user's perspective.]
 **Constraints:**
 - [Constraint]
 
+**Principles Compliance:**
+- Architecture: [Applicable principles and compliance]
+- Development: [Applicable principles and compliance]
+- Security: [Applicable principles and compliance]
+
 === END TEMPLATE ===
 -->
 
@@ -89,3 +109,4 @@ Before finalizing any spec, verify:
 - [ ] **Complete:** Covers happy path AND failure cases
 - [ ] **Independent:** Minimal coupling to other specifications
 - [ ] **Traceable:** Clear ID for linking to tests (REQ-XXX)
+- [ ] **Principle-Compliant:** Explicitly addresses relevant architecture, development, and security principles
